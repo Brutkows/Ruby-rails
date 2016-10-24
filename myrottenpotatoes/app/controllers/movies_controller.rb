@@ -13,6 +13,22 @@ def new
   # default: render 'new' template
 end  
 
+def edit
+  @movie = Movie.find params[:id]
+end
+
+def update
+  @movie = Movie.find params[:id]
+  @movie.update_attributes!(user_params)
+  flash[:notice] = "#{@movie.title} was successfully updated."
+  redirect_to movie_path(@movie)
+end
+
+def destroy
+  @movie = Movie.find(params[:id])
+  @movie.destroy
+  flash[:notice] = "Movie '#{@movie.title}' deleted."
+  redirect_to movies_path
 end
 
 def create
@@ -20,6 +36,11 @@ def create
  flash[:notice] = "#{@movie.title} was successfully created."
  redirect_to movies_path
 end
+
+end
+
+
+
 private
 def user_params
  params.require(:movie)
